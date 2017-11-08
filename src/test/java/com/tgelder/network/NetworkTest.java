@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableSet;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.Set;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings({"unchecked"})
@@ -121,8 +123,9 @@ public class NetworkTest {
             new Edge(5, 2, 10));
 
     Network<Integer> network = new Network<>(nodes, edges);
+    Set<Integer> result = NetworkSearch.search(network, 0, new FindNodes(6));
 
-    assertThat(network.getNodes(0, 6)).containsExactlyInAnyOrder(0, 1, 3, 4, 5, 6);
+    assertThat(result).containsExactlyInAnyOrder(0, 1, 3, 4, 5, 6);
   }
 
   @Test

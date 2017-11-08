@@ -3,6 +3,7 @@ package com.tgelder.network;
 import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
 
+import java.util.Set;
 import java.util.function.Predicate;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +25,9 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, edges);
 
-    assertThat(network.findClosest(0, predicate)).containsExactly(2);
+    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(0, predicate));
+
+    assertThat(result).containsExactly(2);
   }
 
   @Test
@@ -38,7 +41,9 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, edges);
 
-    assertThat(network.findClosest(0, predicate)).containsExactly(2);
+    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(0, predicate));
+
+    assertThat(result).containsExactly(2);
   }
 
   @Test
@@ -53,7 +58,9 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, edges);
 
-    assertThat(network.findClosest(0, predicate)).containsExactly(2);
+    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(0, predicate));
+
+    assertThat(result).containsExactly(2);
   }
 
   @Test
@@ -67,7 +74,9 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, edges);
 
-    assertThat(network.findClosest(0, predicate)).containsExactly(4);
+    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(0, predicate));
+
+    assertThat(result).containsExactly(4);
   }
 
   @Test
@@ -81,7 +90,9 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, edges);
 
-    assertThat(network.findClosest(1, predicate)).containsExactlyInAnyOrder(0, 2);
+    Set<Integer> result = NetworkSearch.search(network, 1, new FindClosest<>(1, predicate));
+
+    assertThat(result).containsExactlyInAnyOrder(0, 2);
   }
 
   @Test
@@ -97,7 +108,9 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, edges);
 
-    assertThat(network.findClosest(0, predicate)).containsExactly(6);
+    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(0, predicate));
+
+    assertThat(result).containsExactly(6);
   }
 
   @Test
@@ -111,7 +124,9 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, edges);
 
-    assertThat(network.findClosest(0, predicate)).isEmpty();
+    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(0, predicate));
+
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -120,7 +135,9 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, ImmutableSet.of());
 
-    assertThat(network.findClosest(0, predicate)).isEmpty();
+    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(0, predicate));
+
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -136,7 +153,9 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, edges);
 
-    assertThat(network.findClosest(1, predicate)).containsExactlyInAnyOrder(0, 2);
+    Set<Integer> result = NetworkSearch.search(network, 1, new FindClosest<>(1, predicate));
+
+    assertThat(result).containsExactlyInAnyOrder(0, 2);
   }
 
 }
