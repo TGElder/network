@@ -172,4 +172,54 @@ public class NetworkTest {
     assertThat(networkMerged.getEdges(3, 2).findFirst().get().getCost()).isEqualTo(2);
   }
 
+  @Test
+  public void testCreateGridNetwork() {
+    int[] neighbourDXs = {-1, 0, 1, 0};
+    int[] neighbourDYs = {0, -1, 0, 1};
+    Network<Integer> gridNetwork = Network.createGridNetwork(3, 3, neighbourDXs, neighbourDYs);
+
+    assertThat(gridNetwork.getOut(0).count()).isEqualTo(2);
+    assertThat(gridNetwork.getEdges(0, 1).findFirst().get().getCost()).isEqualTo(1);
+    assertThat(gridNetwork.getEdges(0, 3).findFirst().get().getCost()).isEqualTo(1);
+
+    assertThat(gridNetwork.getOut(1).count()).isEqualTo(3);
+    assertThat(gridNetwork.getEdges(1, 0).findFirst().get().getCost()).isEqualTo(1);
+    assertThat(gridNetwork.getEdges(1, 2).findFirst().get().getCost()).isEqualTo(1);
+    assertThat(gridNetwork.getEdges(1, 4).findFirst().get().getCost()).isEqualTo(1);
+
+    assertThat(gridNetwork.getOut(2).count()).isEqualTo(2);
+    assertThat(gridNetwork.getEdges(2, 1).findFirst().get().getCost()).isEqualTo(1);
+    assertThat(gridNetwork.getEdges(2, 5).findFirst().get().getCost()).isEqualTo(1);
+
+    assertThat(gridNetwork.getOut(3).count()).isEqualTo(3);
+    assertThat(gridNetwork.getEdges(3, 0).findFirst().get().getCost()).isEqualTo(1);
+    assertThat(gridNetwork.getEdges(3, 4).findFirst().get().getCost()).isEqualTo(1);
+    assertThat(gridNetwork.getEdges(3, 6).findFirst().get().getCost()).isEqualTo(1);
+
+    assertThat(gridNetwork.getOut(4).count()).isEqualTo(4);
+    assertThat(gridNetwork.getEdges(4, 1).findFirst().get().getCost()).isEqualTo(1);
+    assertThat(gridNetwork.getEdges(4, 3).findFirst().get().getCost()).isEqualTo(1);
+    assertThat(gridNetwork.getEdges(4, 5).findFirst().get().getCost()).isEqualTo(1);
+    assertThat(gridNetwork.getEdges(4, 7).findFirst().get().getCost()).isEqualTo(1);
+
+    assertThat(gridNetwork.getOut(5).count()).isEqualTo(3);
+    assertThat(gridNetwork.getEdges(5, 2).findFirst().get().getCost()).isEqualTo(1);
+    assertThat(gridNetwork.getEdges(5, 4).findFirst().get().getCost()).isEqualTo(1);
+    assertThat(gridNetwork.getEdges(5, 8).findFirst().get().getCost()).isEqualTo(1);
+
+    assertThat(gridNetwork.getOut(6).count()).isEqualTo(2);
+    assertThat(gridNetwork.getEdges(6, 3).findFirst().get().getCost()).isEqualTo(1);
+    assertThat(gridNetwork.getEdges(6, 7).findFirst().get().getCost()).isEqualTo(1);
+
+    assertThat(gridNetwork.getOut(7).count()).isEqualTo(3);
+    assertThat(gridNetwork.getEdges(7, 4).findFirst().get().getCost()).isEqualTo(1);
+    assertThat(gridNetwork.getEdges(7, 6).findFirst().get().getCost()).isEqualTo(1);
+    assertThat(gridNetwork.getEdges(7, 8).findFirst().get().getCost()).isEqualTo(1);
+
+    assertThat(gridNetwork.getOut(8).count()).isEqualTo(2);
+    assertThat(gridNetwork.getEdges(8, 5).findFirst().get().getCost()).isEqualTo(1);
+    assertThat(gridNetwork.getEdges(8, 7).findFirst().get().getCost()).isEqualTo(1);
+  }
+
 }
+

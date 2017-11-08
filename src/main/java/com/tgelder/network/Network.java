@@ -7,6 +7,7 @@ import lombok.Getter;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @AllArgsConstructor
@@ -169,6 +170,41 @@ public class Network<T> {
   private class Exit {
     private final T neighbour;
     private final Edge edge;
+  }
+
+  public static Network<Integer> createGridNetwork(int width,
+                                                   int height,
+                                                   int[] neighbourDXs,
+                                                   int[] neighbourDYs) {
+    ImmutableSet<Integer> nodes = IntStream
+            .range(0, width * height).boxed()
+            .collect(ImmutableSet.toImmutableSet());
+
+    ImmutableSet.Builder<Edge<Integer>> edgeBuilder = ImmutableSet.builder();
+
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        for (int n = 0; n < neighbourDXs.length; n++) {
+
+          int dx = neighbourDXs[n];
+          int dy = neighbourDYs[n];
+
+          int nx = x + dx;
+          int ny = y + dy;
+
+          int index = (width * y) + x;
+          int nindex = (width * ny) + nx;
+
+          double cost = Math.sqrt(dx * dx + dy * dy);
+
+          if (nx >= 0 && ny >= 0 && nx < width && ny < height) {
+            edgeBuilder.add(new Edge<>(index, nindex, cost));
+          }
+        }
+      }
+    }
+
+    return new Network(nodes, edgeBuilder.build());
   }
 
 }
