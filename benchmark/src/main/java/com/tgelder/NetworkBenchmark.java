@@ -31,13 +31,33 @@
 
 package com.tgelder;
 
+import com.tgelder.network.Network;
 import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.infra.Blackhole;
 
-public class MyBenchmark {
+public class NetworkBenchmark {
+
+  @State(Scope.Thread)
+  public static class NetworkState {
+
+    public final Network<Integer> network;
+
+    public NetworkState() {
+      int[] neighbourDXs = {-1, 0, 1, 0};
+      int[] neighbourDYs = {0, -1, 0, 1};
+      network = Network.createGridNetwork(1024, 1024, neighbourDXs, neighbourDYs);
+    }
+
+
+  }
 
   @Benchmark
-  public void testMethod() {
-    Network network = new Network();
+  public void testFindClosest(Blackhole blackhole, NetworkState networkState) {
+
+    blackhole.consume(networkState.network.<Integer>findClosest(0, n -> n.equals(1048575)));
+
   }
 
 }
