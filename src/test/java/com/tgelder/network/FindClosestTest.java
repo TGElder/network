@@ -1,9 +1,11 @@
 package com.tgelder.network;
 
 import com.google.common.collect.ImmutableSet;
+import lombok.AllArgsConstructor;
 import org.junit.Test;
 
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,8 +14,10 @@ public class FindClosestTest {
 
   private Network<Integer> network;
 
-  private final Predicate<Integer> predicate = i -> i % 2 == 0;
-
+  private Predicate<Integer> getStoppingCondition(Integer start) {
+    return i -> !i.equals(start) && (i % 2 == 0);
+  }
+  
   @Test
   public void shouldNotReturnNodeFailingPredicate() {
     ImmutableSet<Integer> nodes = TestUtils.generateNodes(3);
@@ -25,7 +29,7 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, edges);
 
-    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(0, predicate));
+    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(getStoppingCondition(0)));
 
     assertThat(result).containsExactly(2);
   }
@@ -41,7 +45,7 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, edges);
 
-    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(0, predicate));
+    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(getStoppingCondition(0)));
 
     assertThat(result).containsExactly(2);
   }
@@ -58,7 +62,7 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, edges);
 
-    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(0, predicate));
+    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(getStoppingCondition(0)));
 
     assertThat(result).containsExactly(2);
   }
@@ -74,7 +78,7 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, edges);
 
-    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(0, predicate));
+    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(getStoppingCondition(0)));
 
     assertThat(result).containsExactly(4);
   }
@@ -90,7 +94,7 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, edges);
 
-    Set<Integer> result = NetworkSearch.search(network, 1, new FindClosest<>(1, predicate));
+    Set<Integer> result = NetworkSearch.search(network, 1, new FindClosest<>(getStoppingCondition(1)));
 
     assertThat(result).containsExactlyInAnyOrder(0, 2);
   }
@@ -108,7 +112,7 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, edges);
 
-    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(0, predicate));
+    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(getStoppingCondition(0)));
 
     assertThat(result).containsExactly(6);
   }
@@ -124,7 +128,7 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, edges);
 
-    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(0, predicate));
+    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(getStoppingCondition(0)));
 
     assertThat(result).isEmpty();
   }
@@ -135,7 +139,7 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, ImmutableSet.of());
 
-    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(0, predicate));
+    Set<Integer> result = NetworkSearch.search(network, 0, new FindClosest<>(getStoppingCondition(0)));
 
     assertThat(result).isEmpty();
   }
@@ -153,7 +157,7 @@ public class FindClosestTest {
 
     network = new Network<>(nodes, edges);
 
-    Set<Integer> result = NetworkSearch.search(network, 1, new FindClosest<>(1, predicate));
+    Set<Integer> result = NetworkSearch.search(network, 1, new FindClosest<>(getStoppingCondition(1)));
 
     assertThat(result).containsExactlyInAnyOrder(0, 2);
   }

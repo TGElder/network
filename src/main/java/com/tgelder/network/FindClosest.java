@@ -7,14 +7,13 @@ import java.util.function.Predicate;
 @RequiredArgsConstructor
 public class FindClosest<T> implements Search<T> {
 
-  private final T start;
   private final Predicate<T> stoppingCondition;
   private boolean done = false;
   private Double closestCost = null;
 
   @Override
   public boolean take(T node, double focusCost) {
-    if ((!node.equals(start)) && stoppingCondition.test(node)) {
+    if (stoppingCondition.test(node)) {
       if (closestCost == null) {
         closestCost = focusCost;
         return true;
