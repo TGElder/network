@@ -1,5 +1,6 @@
 package com.tgelder.network;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -102,6 +103,20 @@ public class Network<T> {
     }
 
     return new Network<>(nodes, edgeBuilder.build());
+  }
+
+  public Network<T> disconnect(Set<T> disconnectNodes) {
+    return new Network<>(nodes, edges.stream()
+            .filter(e -> !(disconnectNodes.contains(e.getFrom()) || disconnectNodes.contains(e.getTo())))
+            .collect(ImmutableSet.toImmutableSet()));
+  }
+
+  public Network<T> setCosts(Set<T> costNodes, double cost) {
+    return new Network<>(nodes, edges.stream()
+            .map(e -> (costNodes.contains(e.getFrom()) || costNodes.contains(e.getTo()))
+                    ? new Edge<>(e.getFrom(), e.getTo(), cost)
+                    : e)
+            .collect(ImmutableSet.toImmutableSet()));
   }
 
 }
