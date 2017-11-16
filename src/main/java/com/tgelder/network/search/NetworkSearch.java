@@ -1,4 +1,7 @@
-package com.tgelder.network;
+package com.tgelder.network.search;
+
+import com.tgelder.network.Edge;
+import com.tgelder.network.Network;
 
 import java.util.*;
 import java.util.stream.Collectors;

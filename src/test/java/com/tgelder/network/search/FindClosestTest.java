@@ -1,6 +1,11 @@
-package com.tgelder.network;
+package com.tgelder.network.search;
 
 import com.google.common.collect.ImmutableSet;
+import com.tgelder.network.Edge;
+import com.tgelder.network.Network;
+import com.tgelder.network.TestUtils;
+import com.tgelder.network.search.FindClosest;
+import com.tgelder.network.search.NetworkSearch;
 import org.junit.Test;
 
 import java.util.Set;

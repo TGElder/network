@@ -1,4 +1,4 @@
-package com.tgelder.network;
+package com.tgelder.network.search;
 
 import lombok.RequiredArgsConstructor;
 

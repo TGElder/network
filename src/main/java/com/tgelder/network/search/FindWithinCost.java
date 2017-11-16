@@ -1,9 +1,9 @@
-package com.tgelder.network;
+package com.tgelder.network.search;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class FindNodes<T> implements Search<T> {
+public class FindWithinCost<T> implements Search<T> {
 
   private final double maxCost;
   private boolean done = false;
