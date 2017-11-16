@@ -1,11 +1,9 @@
 package com.tgelder.network;
 
 import com.google.common.collect.ImmutableSet;
-import lombok.AllArgsConstructor;
 import org.junit.Test;
 
 import java.util.Set;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static org.assertj.core.api.Assertions.assertThat;

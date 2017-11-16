@@ -4,8 +4,8 @@ import com.google.common.collect.ImmutableSet;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.*;
-import java.util.function.Predicate;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -66,7 +66,7 @@ public class Network<T> {
     getEdges().stream()
             .filter(e -> other.getEdges(e.getFrom(), e.getTo()).count() == 0)
             .forEach(edgeBuilder::add);
-    return new Network<T>(nodes, edgeBuilder.build());
+    return new Network<>(nodes, edgeBuilder.build());
   }
 
   public static Network<Integer> createGridNetwork(int width,
@@ -101,7 +101,7 @@ public class Network<T> {
       }
     }
 
-    return new Network<Integer>(nodes, edgeBuilder.build());
+    return new Network<>(nodes, edgeBuilder.build());
   }
 
 }
