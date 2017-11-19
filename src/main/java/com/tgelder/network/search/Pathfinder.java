@@ -4,7 +4,10 @@ import com.google.common.collect.ImmutableList;
 import com.tgelder.network.Edge;
 import com.tgelder.network.Network;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Optional;
+import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -46,21 +49,18 @@ public class Pathfinder {
       neighbours.forEach((neighbour, edgeOptional) -> {
         double neighbourCost = focusCost + edgeOptional.get().getCost();
         if (!open[neighbour] || neighbourCost < G[neighbour]) {
-          if (neighbourCost < G[neighbour]) {
-            G[neighbour] = neighbourCost;
-            parents[neighbour] = edgeOptional.get();
-            G[neighbour] = neighbourCost;
-            F[neighbour] = neighbourCost + heuristic.apply(neighbour);
-            if (!open[neighbour]) {
-              tree.remove(neighbour);
-            } else {
-              open[neighbour] = true;
-            }
-
-            tree.add(neighbour);
+          G[neighbour] = neighbourCost;
+          parents[neighbour] = edgeOptional.get();
+          G[neighbour] = neighbourCost;
+          F[neighbour] = neighbourCost + heuristic.apply(neighbour);
+          if (!open[neighbour]) {
+            tree.remove(neighbour);
+          } else {
+            open[neighbour] = true;
           }
-        }
 
+          tree.add(neighbour);
+        }
       });
     }
 
@@ -72,11 +72,11 @@ public class Pathfinder {
     Integer focus = to;
 
     ImmutableList.Builder<Edge<Integer>> out = ImmutableList.builder();
-    while (focus != from) {
+    while (!focus.equals(from)) {
       out.add(parents[focus]);
       focus = (Integer) parents[focus].getFrom();
     }
-    return out.build();
+    return out.build().reverse();
   }
 
 }
