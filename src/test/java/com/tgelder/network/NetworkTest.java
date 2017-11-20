@@ -38,7 +38,7 @@ public class NetworkTest {
     edge77 = new Edge<>(7, 7, 1);
 
     network = new Network<>(nodes,
-            ImmutableSet.of(edge01, edge02a, edge02b, edge13, edge23a, edge23b, edge56, edge65a, edge65b, edge77));
+                            ImmutableSet.of(edge01, edge02a, edge02b, edge13, edge23a, edge23b, edge56, edge65a, edge65b, edge77));
   }
 
   @Test
@@ -297,5 +297,32 @@ public class NetworkTest {
     assertThat(network.getEdges(8, 7).findFirst().get().getCost()).isEqualTo(1);
   }
 
+  @Test
+  public void testCopyWithNodes() {
+    nodes = TestUtils.generateNodes(8);
+
+    Network<Integer> network = new Network<>(nodes, ImmutableSet.of());
+    Network<Integer> network2 = network.copyWithNodes(ImmutableSet.of(8, 9));
+
+    Integer[] expected = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+    assertThat(network2.getNodes()).containsExactlyInAnyOrder(expected);
+  }
+
+  @Test
+  public void testCopyWithEdges() {
+    Network<Integer> network = new Network<>(TestUtils.generateNodes(3), ImmutableSet.of(
+            new Edge<>(0, 1, 1),
+            new Edge<>(1, 2, 1)));
+
+    Network<Integer> network2 = network.copyWithEdges(ImmutableSet.of(
+            new Edge<>(2, 1, 1),
+            new Edge<>(1, 0, 1)));
+
+    assertThat(network2.getEdges(0, 1)).hasSize(1);
+    assertThat(network2.getEdges(1, 2)).hasSize(1);
+    assertThat(network2.getEdges(2, 1)).hasSize(1);
+    assertThat(network2.getEdges(1, 0)).hasSize(1);
+  }
 }
 

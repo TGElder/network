@@ -31,8 +31,8 @@
 
 package com.tgelder;
 
-import com.tgelder.network.search.FindClosest;
 import com.tgelder.network.Network;
+import com.tgelder.network.search.FindClosest;
 import com.tgelder.network.search.NetworkSearch;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Scope;
@@ -52,12 +52,11 @@ public class NetworkBenchmark {
       network = Network.createGridNetwork(1024, 1024, neighbourDXs, neighbourDYs);
     }
 
-
   }
 
   @Benchmark
   public void testFindClosest(Blackhole blackhole, NetworkState networkState) {
-    NetworkSearch.search(networkState.network, 0, new FindClosest<>(n -> n.equals(1048575)));
+    blackhole.consume(NetworkSearch.search(networkState.network, 0, new FindClosest<>(n -> n.equals(1048575))));
   }
 
 }

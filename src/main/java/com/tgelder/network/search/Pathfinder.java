@@ -8,7 +8,6 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeSet;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Pathfinder {
@@ -17,7 +16,7 @@ public class Pathfinder {
   public static Optional<ImmutableList<Edge<Integer>>> find(Network<Integer> network,
                                                             Integer from,
                                                             Integer to,
-                                                            Function<Integer, Double> heuristic) {
+                                                            Heuristic heuristic) {
     int nodes = network.getNodes().size();
     boolean[] open = new boolean[nodes];
     boolean[] closed = new boolean[nodes];
@@ -52,7 +51,7 @@ public class Pathfinder {
           G[neighbour] = neighbourCost;
           parents[neighbour] = edgeOptional.get();
           G[neighbour] = neighbourCost;
-          F[neighbour] = neighbourCost + heuristic.apply(neighbour);
+          F[neighbour] = neighbourCost + heuristic.calculate(neighbour, to);
           if (!open[neighbour]) {
             tree.remove(neighbour);
           } else {
